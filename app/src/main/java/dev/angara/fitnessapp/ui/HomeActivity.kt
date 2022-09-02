@@ -1,7 +1,8 @@
-package dev.angara.fitnessapp
+package dev.angara.fitnessapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import dev.angara.fitnessapp.R
 import dev.angara.fitnessapp.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
@@ -13,7 +14,7 @@ class HomeActivity : AppCompatActivity() {
         setUpBottomNav()
     }
     fun setUpBottomNav(){
-        binding.bnvHome.setOnItemSelectedListener { item ->
+        binding.bnvHome.setOnItemSelectedListener { item->
             when(item.itemId){
                 R.id.plan -> {
                     supportFragmentManager.beginTransaction().replace(R.id.fcvHome, ProfileFragment()).commit()
@@ -21,11 +22,14 @@ class HomeActivity : AppCompatActivity() {
 
                 }
                 R.id.track ->{
-                    supportFragmentManager.beginTransaction().replace(R.id.fcvHome,TrackFragment()).commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.fcvHome, TrackFragment()).commit()
                     true
                 }
                 R.id.profile ->{
-                    supportFragmentManager.beginTransaction().replace(R.id.fcvHome,ProfileFragment()).commit()
+                    supportFragmentManager.beginTransaction().replace(
+                        R.id.fcvHome,
+                        ProfileFragment()
+                    ).commit()
                     true
                 }
                 else -> false

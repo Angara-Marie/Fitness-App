@@ -1,4 +1,4 @@
-package dev.angara.fitnessapp
+package dev.angara.fitnessapp.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +17,7 @@ class LoginActivity : AppCompatActivity() {
             validateLogin()
         }
         binding.tvSignUp.setOnClickListener {
-            startActivity(Intent(this,SignUpActivity::class.java))
+            startActivity(Intent(this, SignUpActivity::class.java))
         }
     }
     fun validateLogin(){
@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
             error = true
         }
         if (!error){
-            startActivity(Intent(this,HomeActivity::class.java))
+            startActivity(Intent(this, HomeActivity::class.java))
             finish()
         }
     }

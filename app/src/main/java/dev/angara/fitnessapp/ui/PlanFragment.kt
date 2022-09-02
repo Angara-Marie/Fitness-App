@@ -1,10 +1,11 @@
-package dev.angara.fitnessapp
+package dev.angara.fitnessapp.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import dev.angara.fitnessapp.R
 
 
 class PlanFragment : Fragment() {

@@ -1,8 +1,9 @@
-package dev.angara.fitnessapp
+package dev.angara.fitnessapp.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import dev.angara.fitnessapp.R
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
