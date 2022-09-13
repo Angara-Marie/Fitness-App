@@ -5,6 +5,7 @@
       <map>
         <entry key="app/src/main/res/drawable/splash_bg.xml" value="0.181" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.19375" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/activity_login2.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.19375" />

@@ -1,31 +1,50 @@
 package dev.angara.fitnessapp.ui
 
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import dev.angara.fitnessapp.databinding.ActivitySignUpBinding
 import dev.angara.fitnessapp.models.RegisterRequest
 import dev.angara.fitnessapp.models.RegisterResponse
 import dev.angara.fitnessapp.retrofit.ApiClient
 import dev.angara.fitnessapp.retrofit.ApiInterface
+import dev.angara.fitnessapp.viewModel.UserViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class SignUpActivity : AppCompatActivity() {
     lateinit var binding:ActivitySignUpBinding
+    val userViewModel: UserViewModel by viewModels()
+    lateinit var sharedPrefs:SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        sharedPrefs = getSharedPreferences("FITNESSAPP_PREFS", MODE_PRIVATE)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.btnSignUp.setOnClickListener {
             validateSignUp()
         }
-        binding.tvLogin.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
-        }
+//        binding.tvLogin.setOnClickListener {
+//            startActivity(Intent(this, LoginActivity::class.java))
+//        }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        userViewModel.loginResponseLiveData.observe(this, Observer { registerResponse ->
+            Toast.makeText(baseContext,registerResponse?.message,Toast.LENGTH_LONG).show()
+            startActivity(Intent(this@SignUpActivity, LoginActivity::class.java))
+        })
+        userViewModel.loginErrorLiveData.observe(this, Observer { error ->
+            Toast.makeText(baseContext,error,Toast.LENGTH_LONG).show()
+        })
     }
     fun validateSignUp(){
         var firstName = binding.etFisrtName.text.toString()
@@ -61,31 +80,11 @@ class SignUpActivity : AppCompatActivity() {
 
         if (!error){
             val registerRequest= RegisterRequest(firstName,secondName,email,phoneNumber,password)
-            makeRegistrationRequest(registerRequest)
+            userViewModel.registerUser(registerRequest)
+            startActivity(Intent(this, LoginActivity::class.java))
         }
     }
 
-    fun makeRegistrationRequest(registerRequest: RegisterRequest){
-        var apiClient= ApiClient.buildApiClient(ApiInterface::class.java)
-        var request = apiClient.registerUser(registerRequest)
-        request.enqueue(object : Callback<RegisterResponse>{
-            override fun onResponse(
-                call: Call<RegisterResponse>,
-                response: Response<RegisterResponse>
-            ) {
-                if (response.isSuccessful){
-                    var message = response.body()?.message
-                    Toast.makeText(baseContext, message, Toast.LENGTH_LONG).show()
-                }else{
-                    val error = response.errorBody()?.string()
-                    Toast.makeText(baseContext, error, Toast.LENGTH_LONG).show()
-                }
-            }
 
-            override fun onFailure(call: Call<RegisterResponse>, t: Throwable) {
-                Toast.makeText(baseContext, t.message, Toast.LENGTH_LONG).show()
-            }
 
-        })
-    }
 }
